@@ -23,8 +23,11 @@ public class RoleApi {
     @PostMapping
     public ResponseEntity createRole(@RequestBody String roleName){
         Role role = roleService.saveRole(roleName);
-        URI uri = URI.create("/roles/" + role.getId());
 
+        if (role == null)
+            return ResponseEntity.badRequest().build();
+
+        URI uri = URI.create("/roles/" + role.getId());
         return ResponseEntity.created(uri).body(role);
     }
 

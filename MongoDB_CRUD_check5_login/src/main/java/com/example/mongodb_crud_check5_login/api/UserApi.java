@@ -19,8 +19,11 @@ public class UserApi {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid UserCreationRequest request) {
         User createdUser = service.saveUser(request);
-        URI uri = URI.create("/users/" + createdUser.getId());
 
+        if(createdUser == null)
+            return ResponseEntity.badRequest().build();
+
+        URI uri = URI.create("/users/" + createdUser.getId());
         UserDTO userDTO = new UserDTO(createdUser.getId(), createdUser.getEmail());
 
         return ResponseEntity.created(uri).body(userDTO);
