@@ -24,7 +24,7 @@ public class JwtTokenUtil  {
                 .setSubject(String.format("%s,%s", user.getId(), user.getEmail()))
                 .setIssuer("CodeJava")
                 .claim("roles", user.getRoles().toString())
-                .setIssuedAt(new Date())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
